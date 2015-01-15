@@ -4,6 +4,11 @@
 #include "GLFW\glfw3.h"
 #include "glm\glm.hpp"
 
+#include <vector>
+#include <string>
+#include <fstream>
+#include <iostream>
+
 class GLF
 {
 private:
@@ -11,12 +16,12 @@ private:
 protected:
 
 public:
-	static GLFWwindow* window;
+	GLFWwindow* window;
 
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
 	width and height as integers and title as const char**/
-	static int InitWindow(int a_screenWidth, int a_screenHeight, const char* a_title)
+	int InitWindow(int a_screenWidth, int a_screenHeight, const char* a_title)
 	{
 		if (!glfwInit())
 		{
@@ -39,19 +44,25 @@ public:
 			glfwTerminate();
 			return -1;
 		}
+
+	GLuint uiProgramTextured = CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
+	GLuint MatrixIDTextured = glGetUniformLocation(uiProgramTextured, "MVP");
 		return 0;
 	}
 
+	GLuint CreateProgram(const char *a_vertex, const char *a_frag);
+	GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
+
 	/*Call shutdown after while loop before main loop returns last value 
 	to properly close opengl*/
-	static void Shutdown()
+	void Shutdown()
 	{
 		glfwTerminate();
 	}
 
 	/*Use SetScreen to apply background color
 	input paramaters in the order of rgba as floats*/
-	static void SetScreen(float a_red, float a_green, float a_blue, float a_alpha)
+	void SetScreenColor(float a_red, float a_green, float a_blue, float a_alpha)
 	{
 		glClearColor(a_red, a_green, a_blue, a_alpha);
 		glClear(GL_COLOR_BUFFER_BIT);
@@ -64,13 +75,11 @@ public:
 	}
 
 	/*Apply Swap Buffers last in while loop, updates events and swaps buffers*/
-	static void SwapBuffers()
+	void SwapBuffers()
 	{
 		glfwSwapBuffers(window);
 
 		//poll for and process events
 		glfwPollEvents();
 	}
-
-
 };

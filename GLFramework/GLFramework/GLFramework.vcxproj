@@ -52,7 +52,7 @@
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
       <AdditionalLibraryDirectories>$(Projectdir)libs\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32.lib;glfw3.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;SOIL.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
@@ -71,10 +71,16 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Framework.cpp" />
-    <ClCompile Include="source\main.cpp" />
+    <ClCompile Include="source\test_main.cpp" />
+    <ClCompile Include="source\TestObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\framework.h" />
+    <ClInclude Include="include\TestObj.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="TexturedFragmentShader.glsl" />
+    <None Include="VertexShader.glsl" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
