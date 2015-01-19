@@ -4,7 +4,7 @@
 class TestObject
 {
 public:
-	int x, y, height, width;
+	float position[4], color[4];
 	unsigned int spriteID;
 
 

@@ -1,8 +1,6 @@
 #include "framework.h"
 #include "TestObj.h"
 
-void InitTestObject();
-
 GLF Frmwrk;
 
 int main()
@@ -16,12 +14,4 @@ int main()
 		Frmwrk.SwapBuffers();
 	}
 	Frmwrk.Shutdown();
-}
-
-void InitTestObject()
-{
-	TestObject Player;
-	Player.x = Player.y = 300;
-	Player.width = Player.height = 50;
-
 }

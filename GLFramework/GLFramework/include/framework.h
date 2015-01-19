@@ -8,6 +8,14 @@
 #include <string>
 #include <fstream>
 #include <iostream>
+#include "SOIL.h"
+
+struct vertex
+{
+public:
+
+};
+vertex* Vertex = new vertex[4];
 
 class GLF
 {
@@ -17,6 +25,7 @@ protected:
 
 public:
 	GLFWwindow* window;
+	GLuint uiVBO;
 
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
@@ -47,11 +56,19 @@ public:
 
 	GLuint uiProgramTextured = CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
 	GLuint MatrixIDTextured = glGetUniformLocation(uiProgramTextured, "MVP");
+	float* orthographicProjection = getOrtho(0, 1024, 0, 720, 0, 100);
+
+	//enable shaders
+	glUseProgram(MatrixIDTextured);
+
+	//ortho projection to the shader program
+	glUniformMatrix4fv(MatrixIDTextured, 1, GL_FALSE, orthographicProjection);
 		return 0;
 	}
 
 	GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 	GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
+	float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
 
 	/*Call shutdown after while loop before main loop returns last value 
 	to properly close opengl*/
@@ -68,11 +85,14 @@ public:
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
 
-	/**/
-	static unsigned int CreateSprite(const char* a_textureName, int a_width, int a_height)
-	{
+	/*used inside CreateSprite to load texture into object*/
+	unsigned int loadTexture(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP);
+	
+	/*loading texture height width and bpp into shaders*/
+	unsigned int CreateSprite(const char* a_textureName, int a_width, int a_height, int a_bpp);
 
-	}
+	void UpdateDraw(Vertex);
+
 
 	/*Apply Swap Buffers last in while loop, updates events and swaps buffers*/
 	void SwapBuffers()
