@@ -1,4 +1,7 @@
 #include "framework.h"
+
+
+
 GLuint GLF::CreateShader(GLenum a_eShaderType, const char *a_strShaderFile)
 {
 	std::string strShaderCode;
@@ -113,7 +116,6 @@ unsigned int GLF::CreateSprite(const char* a_textureName, int a_width, int a_hei
 	GLuint uiTextureID = loadTexture(a_textureName, a_width, a_height, a_bpp);
 	glGenBuffers(1, &uiVBO);
 	return uiTextureID;
-
 }
 
 unsigned int GLF::loadTexture(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP)
@@ -144,7 +146,7 @@ unsigned int GLF::loadTexture(const char* a_pFilename, int & a_iWidth, int & a_i
 	}
 }
 
-void GLF::UpdateDraw(Vertex)
+void GLF::UpdateDraw(Sprite& a_object)
 {
 	//check if vertex buffer succeeded
 	if (uiVBO != 0)
@@ -153,13 +155,13 @@ void GLF::UpdateDraw(Vertex)
 		glBindBuffer(GL_ARRAY_BUFFER, uiVBO);
 
 		//allocate space on graphics card
-		glBufferData(GL_ARRAY_BUFFER, sizeof(BYTE)* 8, NULL, GL_STATIC_DRAW);
+		glBufferData(GL_ARRAY_BUFFER, sizeof(BYTE)* 36, NULL, GL_STATIC_DRAW);
 
 		//get pointer to allocate space on graphics card
 		GLvoid* vSBuffer = glMapBuffer(GL_ARRAY_BUFFER, GL_WRITE_ONLY);
 
 		//copy to graphics card
-		memcpy(vSBuffer, vertex, sizeof(BYTE)* 8);
+		memcpy(vSBuffer, &a_object, sizeof(BYTE)* 36);
 
 		//unmap and unbind
 		glUnmapBuffer(GL_ARRAY_BUFFER);

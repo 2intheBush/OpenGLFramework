@@ -10,12 +10,18 @@
 #include <iostream>
 #include "SOIL.h"
 
-struct vertex
+class Sprite
 {
 public:
+	Sprite(){};
+	~Sprite(){};
+	int position[4], color[4];
+	unsigned int spriteID;
+	int x, y, height, width;
+	float uv[2];
 
 };
-vertex* Vertex = new vertex[4];
+
 
 class GLF
 {
@@ -24,6 +30,8 @@ private:
 protected:
 
 public:
+	GLF(){};
+	~GLF(){};
 	GLFWwindow* window;
 	GLuint uiVBO;
 
@@ -91,7 +99,7 @@ public:
 	/*loading texture height width and bpp into shaders*/
 	unsigned int CreateSprite(const char* a_textureName, int a_width, int a_height, int a_bpp);
 
-	void UpdateDraw(Vertex);
+	void UpdateDraw(Sprite& a_object);
 
 
 	/*Apply Swap Buffers last in while loop, updates events and swaps buffers*/
