@@ -35,6 +35,8 @@ public:
 	GLuint uiVBO;
 	GLuint uiIBO;
 	unsigned int loadTexture(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP);
+
+	void UpdateVertices(float o_loc[2], int o_size[2]);
 };
 #endif
 

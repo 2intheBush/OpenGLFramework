@@ -2,7 +2,12 @@
 
 Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2])
 {
+	int imageWidth, imageHeight; 
+
 	bpp = 4;
+	//Use load texture to apply texture to sprite I
+	spriteID = loadTexture(o_fileName, imageWidth, imageHeight, bpp);
+
 	//vertex one
 	vertices[0].position[0] = o_loc[0] - o_size[0] * .5f;
 	vertices[0].position[1] = o_loc[1] - o_size[1] * .5f;
@@ -44,9 +49,6 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2])
 		vertices[i].color[3] = 1.f;
 	}
 	
-	//Use load texture to apply texture to sprite I
-	spriteID = loadTexture(o_fileName, o_size[0], o_size[1], bpp);
-	
 	//create VBO and IBO for object
 	glGenBuffers(1, &uiVBO);
 	glGenBuffers(1, &uiIBO);
@@ -78,4 +80,23 @@ unsigned int Sprite::loadTexture(const char* o_fileName, int & a_iWidth, int & a
 		}
 		return uiTextureID;
 	}
-}\
+}
+
+void Sprite::UpdateVertices(float o_loc[2], int o_size[2])
+{
+	//vertex one
+	vertices[0].position[0] = o_loc[0] - o_size[0] * .5f;
+	vertices[0].position[1] = o_loc[1] - o_size[1] * .5f;
+
+	//vertex two
+	vertices[1].position[0] = o_loc[0] - o_size[0] * .5f;
+	vertices[1].position[1] = o_loc[1] + o_size[1] * .5f;
+
+	//Vertex three
+	vertices[2].position[0] = o_loc[0] + o_size[0] * .5f;
+	vertices[2].position[1] = o_loc[1] + o_size[1] * .5f;
+
+	//Vertex four
+	vertices[3].position[0] = o_loc[0] + o_size[0] * .5f;
+	vertices[3].position[1] = o_loc[1] - o_size[1] * .5f;
+}

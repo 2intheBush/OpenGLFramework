@@ -13,6 +13,17 @@ public:
 	GLuint uiProgramTextured;
 	GLuint MatrixIDTextured = -1;
 	const float* ortho;
+	
+	enum KeyPressed{
+		w = GLFW_KEY_W,
+		a = GLFW_KEY_A,
+		s = GLFW_KEY_S,
+		d = GLFW_KEY_D,
+		spacebar = GLFW_KEY_SPACE,
+		esc = GLFW_KEY_ESCAPE,
+		leftbutton = GLFW_MOUSE_BUTTON_LEFT,
+		rightbutton = GLFW_MOUSE_BUTTON_RIGHT,
+	};
 
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
@@ -43,6 +54,10 @@ public:
 		ortho = getOrtho(0, a_screenWidth, 0, a_screenHeight, 0, 100);
 		uiProgramTextured = CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
 		MatrixIDTextured = glGetUniformLocation(uiProgramTextured, "MVP");
+
+		//alpha blend
+		glEnable(GL_ALPHA_TEST);
+		glAlphaFunc(GL_GREATER, 0);
 		return 0;
 	}
 
@@ -75,4 +90,14 @@ public:
 		//poll for and process events
 		glfwPollEvents();
 	}
+
+	bool IsKeyPressed(KeyPressed key);
+
+	bool IsMousePressed(KeyPressed key);
+	
+	glm::vec2 MousePosition();
+
+	void AddFont(const char* a_fileName);
+
+	void DrawString();
 };

@@ -187,3 +187,36 @@ void GLF::DrawSprite(Sprite& s_object)
 	glBindTexture(GL_TEXTURE_2D, 0);
 
 }
+
+bool GLF::IsKeyPressed(KeyPressed key)
+{
+	return glfwGetKey(window, key);
+}
+
+bool GLF::IsMousePressed(KeyPressed key)
+{
+	return glfwGetMouseButton(window, key);
+}
+
+glm::vec2 GLF::MousePosition()
+{
+	double xPos;
+	double yPos;
+	
+	glfwGetCursorPos(window, &xPos, &yPos);
+	return glm::vec2(xPos, yPos);
+}
+
+void GLF::AddFont(const char* a_fileName)
+{
+	float loc[2];
+	int size[2], bpp;
+	bpp = 4; 
+	Sprite font(a_fileName, loc, size);
+	font.loadTexture(a_fileName, size[0], size[1], bpp);
+}
+
+void GLF::DrawString()
+{
+
+}
