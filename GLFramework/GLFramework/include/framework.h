@@ -1,27 +1,4 @@
-#include "GL\glew.h"
-#include "GL\wglew.h"
-//glew has to go first.
-#include "GLFW\glfw3.h"
-#include "glm\glm.hpp"
-
-#include <vector>
-#include <string>
-#include <fstream>
-#include <iostream>
-#include "SOIL.h"
-
-class Sprite
-{
-public:
-	Sprite(){};
-	~Sprite(){};
-	int position[4], color[4];
-	unsigned int spriteID;
-	int x, y, height, width;
-	float uv[2];
-
-};
-
+#include "Sprite.h"
 
 class GLF
 {
@@ -33,7 +10,9 @@ public:
 	GLF(){};
 	~GLF(){};
 	GLFWwindow* window;
-	GLuint uiVBO;
+	GLuint uiProgramTextured;
+	GLuint MatrixIDTextured = -1;
+	const float* ortho;
 
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
@@ -61,22 +40,17 @@ public:
 			glfwTerminate();
 			return -1;
 		}
-
-	GLuint uiProgramTextured = CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
-	GLuint MatrixIDTextured = glGetUniformLocation(uiProgramTextured, "MVP");
-	float* orthographicProjection = getOrtho(0, 1024, 0, 720, 0, 100);
-
-	//enable shaders
-	glUseProgram(MatrixIDTextured);
-
-	//ortho projection to the shader program
-	glUniformMatrix4fv(MatrixIDTextured, 1, GL_FALSE, orthographicProjection);
+		ortho = getOrtho(0, a_screenWidth, 0, a_screenHeight, 0, 100);
+		uiProgramTextured = CreateProgram("VertexShader.glsl", "TexturedFragmentShader.glsl");
+		MatrixIDTextured = glGetUniformLocation(uiProgramTextured, "MVP");
 		return 0;
 	}
 
+	void DrawSprite(Sprite& s_object);
+
 	GLuint CreateProgram(const char *a_vertex, const char *a_frag);
 	GLuint CreateShader(GLenum a_eShaderType, const char *a_strShaderFile);
-	float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
+	const float* getOrtho(float left, float right, float bottom, float top, float a_fNear, float a_fFar);
 
 	/*Call shutdown after while loop before main loop returns last value 
 	to properly close opengl*/
@@ -92,15 +66,6 @@ public:
 		glClearColor(a_red, a_green, a_blue, a_alpha);
 		glClear(GL_COLOR_BUFFER_BIT);
 	}
-
-	/*used inside CreateSprite to load texture into object*/
-	unsigned int loadTexture(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP);
-	
-	/*loading texture height width and bpp into shaders*/
-	unsigned int CreateSprite(const char* a_textureName, int a_width, int a_height, int a_bpp);
-
-	void UpdateDraw(Sprite& a_object);
-
 
 	/*Apply Swap Buffers last in while loop, updates events and swaps buffers*/
 	void SwapBuffers()

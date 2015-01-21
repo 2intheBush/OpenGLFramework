@@ -71,11 +71,13 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="source\Framework.cpp" />
+    <ClCompile Include="source\Sprite.cpp" />
     <ClCompile Include="source\test_main.cpp" />
     <ClCompile Include="source\TestObj.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="include\framework.h" />
+    <ClInclude Include="include\Sprite.h" />
     <ClInclude Include="include\TestObj.h" />
   </ItemGroup>
   <ItemGroup>
