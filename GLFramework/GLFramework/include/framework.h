@@ -99,5 +99,17 @@ public:
 
 	void AddFont(const char* a_fileName);
 
-	void DrawString();
+	void DrawString(const char* string, float loc[2]);
+
+	void DrawChar(const char* string);
+
+	/*
+	@ a_sprite = the sprite being animated
+	@locFirstSprite is the numbers of the location of the first sprite
+	to be animated {number of rows up, which column to start on}
+	@totalNumOfSprites is the number of rows and columns of the sprite sheet{ column, row }
+	
+	first row is 0, first column is 0, starting in the bottom left corner
+	 */
+	void Animate(Sprite a_sprite, double locFirstSprite[2], double totalNumOfSprites[2], int numOfAnimations);
 };

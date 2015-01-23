@@ -10,7 +10,10 @@ int main()
 	float location[2]{300, 300};
 	int size[2]{50, 50};
 
+	float loc2[2]{600, 600};
+	float uv[2]{1,1};
 	Sprite testobject("resources\\images\\Astroid.png", location, size);
+	Sprite AnimatedObject("resources\\images\\TestAnimation.png", loc2, size);
 	
 	Frmwrk.AddFont("resources\\images\\font.png");
 
@@ -46,7 +49,16 @@ int main()
 			glm::vec2 mouPos = Frmwrk.MousePosition();
 			std::cout << mouPos.x << ", " << mouPos.y << std::endl;
 		}
+		
+		//values to test animated object
+		double locFirst[2] {0, 3}, totalNum[2]{6,8};
+		int a = 4;
+		//Animate test calls
 
+		//Frmwrk.Animate(AnimatedObject, locFirst, totalNum, a);
+		AnimatedObject.UpdateVertices(loc2, size);
+		Frmwrk.DrawSprite(AnimatedObject);
+		//input handling test calls
 		testobject.UpdateVertices(location, size);
 		Frmwrk.DrawSprite(testobject);
 		Frmwrk.SwapBuffers();

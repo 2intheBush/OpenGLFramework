@@ -54,6 +54,7 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2])
 	glGenBuffers(1, &uiIBO);
 }
 
+
 unsigned int Sprite::loadTexture(const char* o_fileName, int & a_iWidth, int & a_iHeight, int & a_iBPP)
 {
 	unsigned int uiTextureID = 0;
