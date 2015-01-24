@@ -97,8 +97,6 @@ public:
 	
 	glm::vec2 MousePosition();
 
-	void AddFont(const char* a_fileName);
-
 	void DrawString(const char* string, float loc[2]);
 
 	void DrawChar(const char* string);
@@ -111,5 +109,7 @@ public:
 	
 	first row is 0, first column is 0, starting in the bottom left corner
 	 */
-	void Animate(Sprite a_sprite, double locFirstSprite[2], double totalNumOfSprites[2], int numOfAnimations);
+	
+
+
 };

@@ -1,22 +1,28 @@
 #include "framework.h"
 #include "TestObj.h"
 
+using namespace glm;
+
 GLF Frmwrk;
+
 
 int main()
 {
 	Frmwrk.InitWindow(800, 600, "Hell YA!!");
 
 	float location[2]{300, 300};
-	int size[2]{50, 50};
+	int size[2]{150, 150};
 
-	float loc2[2]{600, 600};
-	float uv[2]{1,1};
-	Sprite testobject("resources\\images\\Astroid.png", location, size);
-	Sprite AnimatedObject("resources\\images\\TestAnimation.png", loc2, size);
+	//loading values into vec4 for uv coordinates
+	float x = 0.0f, y = 0.0f, z = .5f, w = .5f;
+	std::vector<vec2> UVList;
+	UVList.push_back(glm::vec2(x, y));
+	UVList.push_back(glm::vec2(z, y));
+	UVList.push_back(glm::vec2(z, w));
+	UVList.push_back(glm::vec2(x, w));
+
+	Sprite AnimatedObject("resources\\images\\TestGokuC.png", location, size, UVList);
 	
-	Frmwrk.AddFont("resources\\images\\font.png");
-
 	while (!glfwWindowShouldClose(Frmwrk.window))
 	{
 		Frmwrk.SetScreenColor(0.2f, 0.2f, 0.25f, 0.0f);
@@ -50,17 +56,14 @@ int main()
 			std::cout << mouPos.x << ", " << mouPos.y << std::endl;
 		}
 		
-		//values to test animated object
-		double locFirst[2] {0, 3}, totalNum[2]{6,8};
-		int a = 4;
 		//Animate test calls
+		//Frmwrk.Animate(AnimatedObject, locFirst, totalNum, 2);
 
-		//Frmwrk.Animate(AnimatedObject, locFirst, totalNum, a);
-		AnimatedObject.UpdateVertices(loc2, size);
-		Frmwrk.DrawSprite(AnimatedObject);
 		//input handling test calls
-		testobject.UpdateVertices(location, size);
-		Frmwrk.DrawSprite(testobject);
+		AnimatedObject.UpdateVertices(location, size);
+
+		Frmwrk.DrawSprite(AnimatedObject);
+
 		Frmwrk.SwapBuffers();
 	}
 	Frmwrk.Shutdown();

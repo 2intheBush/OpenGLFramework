@@ -207,58 +207,11 @@ glm::vec2 GLF::MousePosition()
 	return glm::vec2(xPos, yPos);
 }
 
-void GLF::AddFont(const char* a_fileName)
-{
-	float loc[2];
-	int size[2], bpp;
-	bpp = 4; 
-	Sprite font(a_fileName, loc, size);
-	font.loadTexture(a_fileName, size[0], size[1], bpp);
-}
-
 void GLF::DrawString(const char* string, float loc[2])
 {
 	for (int i = 0; i < sizeof(string); i++)
 	{
 		
 		//DrawSprite();
-	}
-}
-
-
-void GLF::Animate(Sprite a_sprite, double locFirstSprite[2],double totalNumOfSprites[2], int numOfAnimations)
-{
-	Sprite S = a_sprite;
-	int animCount = 0;
-
-	//vertex one
-	S.vertices[0].uv[0] = locFirstSprite[0];
-	S.vertices[0].uv[1] = locFirstSprite[0];
-
-	//vertex two
-	S.vertices[1].uv[0] = locFirstSprite[0];
-	S.vertices[1].uv[1] = locFirstSprite[1] + 1/ totalNumOfSprites[1];
-
-	//vertex three
-	S.vertices[1].uv[0] = locFirstSprite[0] + 1 / totalNumOfSprites[0];
-	S.vertices[1].uv[1] = locFirstSprite[1] + 1 / totalNumOfSprites[1];
-
-	//vertex three
-	S.vertices[1].uv[0] = locFirstSprite[0] + 1 / totalNumOfSprites[0];
-	S.vertices[1].uv[1] = locFirstSprite[1];
-
-	while (animCount < numOfAnimations)
-	{
-		//vertex one
-		S.vertices[0].uv[0] += 1 / totalNumOfSprites[0];
-
-		//vertex two
-		S.vertices[1].uv[0] += 1 / totalNumOfSprites[0];
-
-		//vertex three
-		S.vertices[2].uv[0] += 1 / totalNumOfSprites[1];
-
-		//vertex four
-		S.vertices[3].uv[0] += 1 / totalNumOfSprites[1];
 	}
 }
