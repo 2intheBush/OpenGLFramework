@@ -97,10 +97,6 @@ public:
 	
 	glm::vec2 MousePosition();
 
-	void DrawString(const char* string, float loc[2]);
-
-	void DrawChar(const char* string);
-
 	/*
 	@ a_sprite = the sprite being animated
 	@locFirstSprite is the numbers of the location of the first sprite

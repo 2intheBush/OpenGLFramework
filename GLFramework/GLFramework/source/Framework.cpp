@@ -156,9 +156,6 @@ void GLF::DrawSprite(Sprite& s_object)
 
 	//class shader program
 	glUseProgram(uiProgramTextured);
-	
-	glActiveTexture(GL_TEXTURE0);
-	glBindTexture(GL_TEXTURE_2D, s_object.spriteID);
 
 	//ortho project onto shader
 	glUniformMatrix4fv(MatrixIDTextured, 1, GL_FALSE, ortho);
@@ -177,7 +174,7 @@ void GLF::DrawSprite(Sprite& s_object)
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)* 4));
 	//now we have UVs, we need to send that info to the graphics card
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)* 8));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(std::vector<glm::vec2>), (void*)(sizeof(float)* 8));
 
 	//draw to the screen
 	glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_BYTE, NULL);
@@ -205,13 +202,4 @@ glm::vec2 GLF::MousePosition()
 	
 	glfwGetCursorPos(window, &xPos, &yPos);
 	return glm::vec2(xPos, yPos);
-}
-
-void GLF::DrawString(const char* string, float loc[2])
-{
-	for (int i = 0; i < sizeof(string); i++)
-	{
-		
-		//DrawSprite();
-	}
 }
