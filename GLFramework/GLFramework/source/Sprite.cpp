@@ -22,10 +22,6 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 	vertices[3].position[0] = o_loc[0] + o_size[0] * .5f;
 	vertices[3].position[1] = o_loc[1] - o_size[1] * .5f;
 
-	for (int i = 0; i < UVList.size(); i++)
-	{
-		std::cout << UVList[i].x << ", " << UVList[i].y << std::endl;
-	}
 	//uniform values for vertices
 	for (int i = 0; i < 4; i++)
 	{
@@ -36,6 +32,7 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 		vertices[i].color[2] = 1.f;
 		vertices[i].color[3] = 1.f;
 		vertices[i].uv.push_back(glm::vec2(UVList[i].x, UVList[i].y));
+		std::cout << UVList[i].x << ", " << UVList[i].y << std::endl;
 	}
 
 	//create VBO and IBO for object
