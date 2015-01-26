@@ -17,16 +17,16 @@ int main()
 	float x = 0.0f, y = 0.0f, z = 1.f, w = 1.f;
 	std::vector<vec2> UVList;
 	UVList.push_back(glm::vec2(x, y));
-	UVList.push_back(glm::vec2(x, w));
-	UVList.push_back(glm::vec2(z, w));
-	UVList.push_back(glm::vec2(z, y));
+	UVList.emplace_back(glm::vec2(z, y));
+	UVList.emplace_back(glm::vec2(z, w));
+	UVList.emplace_back(glm::vec2(x, w));
 
-	std::cout<<"0 = " << UVList[0].x << ", " << UVList[0].y << std::endl;
-	std::cout << "1 = " << UVList[1].x << ", " << UVList[1].y << std::endl;
-	std::cout << "2 = " << UVList[2].x << ", " << UVList[2].y << std::endl;
-	std::cout << "3 = " << UVList[3].x << ", " << UVList[3].y << std::endl;
+	//std::cout<<"0 = " << UVList[0].x << ", " << UVList[0].y << std::endl;
+	//std::cout << "1 = " << UVList[1].x << ", " << UVList[1].y << std::endl;
+	//std::cout << "2 = " << UVList[2].x << ", " << UVList[2].y << std::endl;
+	//std::cout << "3 = " << UVList[3].x << ", " << UVList[3].y << std::endl;
 
-	Sprite AnimatedObject("resources\\images\\TestGokuC.png", location, size, UVList);
+	Sprite AnimatedObject("resources\\images\\Astroid.png", location, size, UVList);
 	
 	while (!glfwWindowShouldClose(Frmwrk.window))
 	{

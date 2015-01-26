@@ -3,48 +3,39 @@
 Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList)
 {
 	int imageWidth, imageHeight;
-
 	bpp = 4;
 	//Use load texture to apply texture to sprite I
 	spriteID = loadTexture(o_fileName, imageWidth, imageHeight, bpp);
-
-
 	//vertex one
 	vertices[0].position[0] = o_loc[0] - o_size[0] * .5f;
 	vertices[0].position[1] = o_loc[1] - o_size[1] * .5f;
-	vertices[0].position[2] = 0.0f;
-	vertices[0].position[3] = 1.0f;
-	vertices[0].uv.push_back(glm::vec2(UVList[0].x, UVList[0].y));
-
 
 	//vertex two
 	vertices[1].position[0] = o_loc[0] - o_size[0] * .5f;
 	vertices[1].position[1] = o_loc[1] + o_size[1] * .5f;
-	vertices[1].position[2] = 0.0f;
-	vertices[1].position[3] = 1.0f;
-	vertices[1].uv.push_back(glm::vec2(UVList[1].x, UVList[1].y));
 
 	//Vertex three
 	vertices[2].position[0] = o_loc[0] + o_size[0] * .5f;
 	vertices[2].position[1] = o_loc[1] + o_size[1] * .5f;
-	vertices[2].position[2] = 0.0f;
-	vertices[2].position[3] = 1.0f;
-	vertices[2].uv.push_back(glm::vec2(UVList[2].x, UVList[2].y));
 
 	//Vertex four
 	vertices[3].position[0] = o_loc[0] + o_size[0] * .5f;
 	vertices[3].position[1] = o_loc[1] - o_size[1] * .5f;
-	vertices[3].position[2] = 0.0f;
-	vertices[3].position[3] = 1.0f;
-	vertices[3].uv.push_back(glm::vec2(UVList[3].x, UVList[3].y));
 
-	//color for vertices
+	for (int i = 0; i < UVList.size(); i++)
+	{
+		std::cout << UVList[i].x << ", " << UVList[i].y << std::endl;
+	}
+	//uniform values for vertices
 	for (int i = 0; i < 4; i++)
 	{
+		vertices[i].position[2] = 0.0f;
+		vertices[i].position[3] = 1.0f;
 		vertices[i].color[0] = 1.f;
 		vertices[i].color[1] = 1.f;
 		vertices[i].color[2] = 1.f;
 		vertices[i].color[3] = 1.f;
+		vertices[i].uv.push_back(glm::vec2(UVList[i].x, UVList[i].y));
 	}
 
 	//create VBO and IBO for object

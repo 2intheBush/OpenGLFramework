@@ -11,7 +11,7 @@ public:
 	~GLF(){};
 	GLFWwindow* window;
 	GLuint uiProgramTextured;
-	GLuint MatrixIDTextured = -1;
+	GLuint MatrixIDTextured;
 	const float* ortho;
 	
 	enum KeyPressed{

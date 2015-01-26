@@ -113,6 +113,26 @@ const float* GLF::getOrtho(float left, float right, float bottom, float top, flo
 
 void GLF::DrawSprite(Sprite& s_object)
 {
+	//check if Index buffer succeeded
+	if (&s_object.uiIBO != 0)
+	{
+		//bind IBO
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_object.uiIBO);
+		//allocate space for index info on the graphics card
+		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(char), NULL, GL_STATIC_DRAW);
+		//get pointer to newly allocated space on the graphics card
+		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
+		//specify the order we'd like to draw our vertices.
+		//In this case they are in sequential order
+		for (int i = 0; i < 4; i++)
+		{
+			((char*)iBuffer)[i] = i;
+		}
+		//unmap and unbind
+		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
+		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+	}
+	
 	//check if vertex buffer succeeded
 	if (&s_object.uiVBO != 0)
 	{
@@ -133,42 +153,23 @@ void GLF::DrawSprite(Sprite& s_object)
 		
 	}
 
-	//check if Index buffer succeeded
-	if (&s_object.uiIBO != 0)
-	{
-		//bind IBO
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_object.uiIBO);
-		//allocate space for index info on the graphics card
-		glBufferData(GL_ELEMENT_ARRAY_BUFFER, 4 * sizeof(char), NULL, GL_STATIC_DRAW);
-		//get pointer to newly allocated space on the graphics card
-		GLvoid* iBuffer = glMapBuffer(GL_ELEMENT_ARRAY_BUFFER, GL_WRITE_ONLY);
-		//specify the order we'd like to draw our vertices.
-		//In this case they are in sequential order
-		for (int i = 0; i < 4; i++)
-		{
-			((char*)iBuffer)[i] = i;
-		}
-		//unmap and unbind
-		glUnmapBuffer(GL_ELEMENT_ARRAY_BUFFER);
-		glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
-	}
-
 
 	//class shader program
 	glUseProgram(uiProgramTextured);
-
 	//ortho project onto shader
 	glUniformMatrix4fv(MatrixIDTextured, 1, GL_FALSE, ortho);
+
+	//bind VBO
+	glBindTexture(GL_TEXTURE_2D, s_object.spriteID);
+	glBindBuffer(GL_ARRAY_BUFFER, s_object.uiVBO);
+	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_object.uiIBO);
+
 
 	//enable vertex array state
 	glEnableVertexAttribArray(0);
 	glEnableVertexAttribArray(1);
 	glEnableVertexAttribArray(2);
 
-	//bind VBO
-	glBindTexture(GL_TEXTURE_2D, s_object.spriteID);
-	glBindBuffer(GL_ARRAY_BUFFER, s_object.uiVBO);
-	glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, s_object.uiIBO);
 
 	//specify where our vertex array is
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
