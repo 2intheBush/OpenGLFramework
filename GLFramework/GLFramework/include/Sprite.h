@@ -16,7 +16,14 @@ struct Vertex
 {
 	float position[4];
 	float color[4];
-	std::vector<glm::vec2> uv;
+	/*
+	GPU only knows base types (ie floats, ints) not created types (std::vector)
+	you can use it, but you'll have to extract it to floats before sending, that is what 
+	this struct is for.  
+	bottom line, keep this floats
+	*/
+	//std::vector<glm::vec2> uv;
+	float uv[2];
 };
 
 class Sprite
