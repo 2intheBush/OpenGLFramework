@@ -35,7 +35,9 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 		vertices[i].color[1] = 1.f;
 		vertices[i].color[2] = 1.f;
 		vertices[i].color[3] = 1.f;
-		vertices[i].uv.push_back(glm::vec2(UVList[i].x, UVList[i].y));
+		//vertices[i].uv.push_back(glm::vec2(UVList[i].x, UVList[i].y));
+		vertices[i].uv[0] = UVList[i].x;
+		vertices[i].uv[1] = UVList[i].y;
 	}
 
 	//create VBO and IBO for object

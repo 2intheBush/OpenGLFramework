@@ -1,4 +1,4 @@
-#version 400
+#version 330
 
 smooth in vec4 vertColour;
 in vec2 UV;
