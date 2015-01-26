@@ -175,7 +175,16 @@ void GLF::DrawSprite(Sprite& s_object)
 	glVertexAttribPointer(0, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), 0);
 	glVertexAttribPointer(1, 4, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float)* 4));
 	//now we have UVs, we need to send that info to the graphics card
-	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(std::vector<glm::vec2>), (void*)(sizeof(float)* 8));
+	/*
+	this is where you tell the GPU how to extract each piece of data from the blob of data you are sending it,
+	each Vertex struct has data and you have to tell it how it's structured as a whole, not each piece.
+	the last param is where each piece of data starts in memory per vertex chunk.
+	for each vertex chunk the vertices start at beginning (0) and are size of 4 floats, then there is color info
+	this starts after the vertices, so it's 0 + the 4 floats and itself is size of 4 floats, then it's the
+	UV coords which will start after (0 + 4 + 4) = 8.
+	*/
+	//glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(std::vector<glm::vec2>), (void*)(sizeof(float)* 8));
+	glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(Vertex), (void*)(sizeof(float) * 8));
 
 	//draw to the screen
 	glDrawElements(GL_TRIANGLE_FAN, 4, GL_UNSIGNED_BYTE, NULL);
