@@ -213,3 +213,17 @@ glm::vec2 GLF::MousePosition()
 	glfwGetCursorPos(window, &xPos, &yPos);
 	return glm::vec2(xPos, yPos);
 }
+
+void GLF::AnimateSprite(Sprite& a_sprite)
+{
+	float DistanceToNextAnim = a_sprite.vertices[3].uv[0] - a_sprite.vertices[0].uv[0] + .01;
+	
+	a_sprite.vertices[0].uv[0] += DistanceToNextAnim;
+
+	a_sprite.vertices[1].uv[0] += DistanceToNextAnim;
+
+	a_sprite.vertices[2].uv[0] += DistanceToNextAnim;
+
+	a_sprite.vertices[3].uv[0] += DistanceToNextAnim;
+
+}
