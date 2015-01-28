@@ -113,6 +113,11 @@ const float* GLF::getOrtho(float left, float right, float bottom, float top, flo
 
 void GLF::DrawSprite(Sprite& s_object)
 {
+	glEnable(GL_BLEND);
+	glEnable(GL_ALPHA_TEST);
+	glEnable(GL_ALPHA);
+	glFrontFace(GL_CW);
+	
 	//check if Index buffer succeeded
 	if (&s_object.uiIBO != 0)
 	{
@@ -212,7 +217,7 @@ glm::vec2 GLF::MousePosition()
 
 void GLF::AnimateSprite(Sprite& a_sprite)
 {
-	float DistanceToNextAnim = a_sprite.vertices[3].uv[0] - a_sprite.vertices[0].uv[0] + .01;
+	float DistanceToNextAnim = a_sprite.vertices[3].uv[0] - a_sprite.vertices[0].uv[0] + .001;
 	
 	a_sprite.vertices[0].uv[0] += DistanceToNextAnim;
 
@@ -223,4 +228,6 @@ void GLF::AnimateSprite(Sprite& a_sprite)
 	a_sprite.vertices[3].uv[0] += DistanceToNextAnim;
 
 }
+
+void GLF::
 

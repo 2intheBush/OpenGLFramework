@@ -4,6 +4,11 @@
 
 using namespace tinyxml2;
 
+struct CharValues
+{
+	unsigned int id, x, y, width, height, xOffset, yOffset;
+};
+
 class GLF
 {
 private:
@@ -107,13 +112,13 @@ public:
 		XMLElement * cursor = root->FirstChildElement("chars");
 		cursor = cursor->FirstChildElement("char");
 		unsigned int id = cursor->IntAttribute("id");
+		unsigned int location[2] = {};
 		//FirstChildElement
 		//IntAttribute
 		//NextSiblingElement
 	}
 
-	void LoadCharFont(char* c)
-	{
+	void LoadCharMap();
 
-	}
+	void LoadCharFont(char* c);
 };

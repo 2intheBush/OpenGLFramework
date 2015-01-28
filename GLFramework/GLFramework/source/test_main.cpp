@@ -23,13 +23,13 @@ int main()
 
 	Frmwrk.dump_to_stdout("resources\\images\\arial.fnt");
 
-	float location[2]{720, 80};
+	float location[2]{80, 80};
 	float location2[2]{400,300};
 	int size[2]{150, 150};
 	int size2[2]{150, 150};
 	
 	//loading values into vec4 for uv coordinates
-	float x = 0.015f, y = .882f, z = .1f, w = .99f;
+	float x = 0.f, y = .5f, z = .16f, w = 1.f;
 	std::vector<vec2> UVList;
 	std::vector<vec2> AsUV_s;
 	UVList.push_back(glm::vec2(x, y));
@@ -43,9 +43,9 @@ int main()
 	AsUV_s.emplace_back(glm::vec2(z_s, w_s));
 	AsUV_s.emplace_back(glm::vec2(z_s, y_s));
 
-	Sprite AnimatedObject("resources\\images\\TestGokuC.png", location, size, UVList);
+	Sprite AnimatedObject("resources\\images\\TestGokuAlpha.png", location, size, UVList);
 	Sprite TestObject("resources\\images\\Astroid.png", location2, size2, AsUV_s);
-	double animTimer = .075;		
+	double animTimer = .085f;		
 	double timeCount = 0;
 	double animationCount = 0;
 	
@@ -78,7 +78,7 @@ int main()
 			UVList.pop_back();
 			UVList.pop_back();
 			UVList.pop_back();
-			x = 0.015f, y = .882f, z = .1f, w = .99f;
+			float x = 0.f, y = .5f, z = .16f, w = 1.f;
 			UVList.push_back(glm::vec2(x, y));
 			UVList.emplace_back(glm::vec2(x, w));
 			UVList.emplace_back(glm::vec2(z, w));

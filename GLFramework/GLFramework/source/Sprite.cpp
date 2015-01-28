@@ -41,22 +41,30 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 	glGenBuffers(1, &uiIBO);
 }
 
-Sprite::Sprite(const char* oFileName, unsigned int location[2], unsigned int size[2])
+Sprite::Sprite(const char* oFileName, unsigned int location[2], unsigned int size[2], unsigned int offset[2])
 {
 	int imageWidth, imageHeight;
 	spriteID = loadTexture(oFileName, imageWidth, imageHeight, bpp);
 	unsigned int bpp = 4;
-	vertices[0].position[0];
-	vertices[0].position[1];
+	vertices[0].position[0] = location[0] - size[0] + offset[0];
+	vertices[0].position[1] = location[1] - size[1] + offset[1];
+	vertices[0].uv[0] = 1 / vertices[0].position[0];
+	vertices[0].uv[1] = 1 / vertices[0].position[1];
 
-	vertices[1].position[0];
-	vertices[1].position[1];
+	vertices[1].position[0] = location[0] - size[0] + offset[0];
+	vertices[1].position[1] = location[1] + size[1] + offset[1];
+	vertices[1].uv[0] = 1 / vertices[1].position[0];
+	vertices[1].uv[1] = 1 / vertices[1].position[1];
 	
-	vertices[2].position[0];
-	vertices[2].position[1];
+	vertices[2].position[0] = location[0] + size[0] + offset[0];
+	vertices[2].position[1] = location[1] + size[1] + offset[1];
+	vertices[2].uv[0] = 1 / vertices[2].position[0];
+	vertices[2].uv[1] = 1 / vertices[2].position[1];
 
-	vertices[3].position[0];
-	vertices[3].position[1];
+	vertices[3].position[0] = location[0] + size[0] + offset[0];
+	vertices[3].position[1] = location[1] - size[1] + offset[1];
+	vertices[3].uv[0] = 1 / vertices[3].position[0];
+	vertices[3].uv[1] = 1 / vertices[3].position[1];
 
 	for (int i = 0; i < 4; i++)
 	{
