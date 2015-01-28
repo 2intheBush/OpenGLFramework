@@ -1,4 +1,8 @@
 #include "Sprite.h"
+#include "tinyxml2.h" 
+#include "SubCommand.h"
+
+using namespace tinyxml2;
 
 class GLF
 {
@@ -9,21 +13,11 @@ protected:
 public:
 	GLF(){};
 	~GLF(){};
-	GLFWwindow* window;
 	GLuint uiProgramTextured;
 	GLuint MatrixIDTextured;
 	const float* ortho;
 	
-	enum KeyPressed{
-		w = GLFW_KEY_W,
-		a = GLFW_KEY_A,
-		s = GLFW_KEY_S,
-		d = GLFW_KEY_D,
-		spacebar = GLFW_KEY_SPACE,
-		esc = GLFW_KEY_ESCAPE,
-		leftbutton = GLFW_MOUSE_BUTTON_LEFT,
-		rightbutton = GLFW_MOUSE_BUTTON_RIGHT,
-	};
+
 
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
@@ -35,14 +29,14 @@ public:
 			return -1;
 		}
 
-		window = glfwCreateWindow(a_screenWidth, a_screenHeight, a_title, NULL, NULL);
-		if (!window)
+		Singleton::GetInstance()->window = glfwCreateWindow(a_screenWidth, a_screenHeight, a_title, NULL, NULL);
+		if (!Singleton::GetInstance()->window)
 		{
 			glfwTerminate();
 			return -1;
 		}
 		//make the window's context current
-		glfwMakeContextCurrent(window);
+		glfwMakeContextCurrent(Singleton::GetInstance()->window);
 
 		//Start GLEW
 		if (glewInit() != GLEW_OK)
@@ -85,13 +79,11 @@ public:
 	/*Apply Swap Buffers last in while loop, updates events and swaps buffers*/
 	void SwapBuffers()
 	{
-		glfwSwapBuffers(window);
+		glfwSwapBuffers(Singleton::GetInstance()->window);
 
 		//poll for and process events
 		glfwPollEvents();
 	}
-
-	bool IsKeyPressed(KeyPressed key);
 
 	bool IsMousePressed(KeyPressed key);
 	
@@ -99,4 +91,29 @@ public:
 
 	void AnimateSprite(Sprite& a_sprite);
 
+	void dump_to_stdout(const char* pFilename)
+	{
+		XMLDocument doc;
+		int status = doc.LoadFile(pFilename);
+
+		if (status != tinyxml2::XML_NO_ERROR)
+		{
+			printf("fuck");
+			doc.PrintError();
+			return;
+		}
+
+		XMLElement * root = doc.FirstChildElement("font");
+		XMLElement * cursor = root->FirstChildElement("chars");
+		cursor = cursor->FirstChildElement("char");
+		unsigned int id = cursor->IntAttribute("id");
+		//FirstChildElement
+		//IntAttribute
+		//NextSiblingElement
+	}
+
+	void LoadCharFont(char* c)
+	{
+
+	}
 };

@@ -195,14 +195,10 @@ void GLF::DrawSprite(Sprite& s_object)
 
 }
 
-bool GLF::IsKeyPressed(KeyPressed key)
-{
-	return glfwGetKey(window, key);
-}
 
 bool GLF::IsMousePressed(KeyPressed key)
 {
-	return glfwGetMouseButton(window, key);
+	return glfwGetMouseButton(Singleton::GetInstance()->window, key);
 }
 
 glm::vec2 GLF::MousePosition()
@@ -210,7 +206,7 @@ glm::vec2 GLF::MousePosition()
 	double xPos;
 	double yPos;
 	
-	glfwGetCursorPos(window, &xPos, &yPos);
+	glfwGetCursorPos(Singleton::GetInstance()->window, &xPos, &yPos);
 	return glm::vec2(xPos, yPos);
 }
 
@@ -227,3 +223,4 @@ void GLF::AnimateSprite(Sprite& a_sprite)
 	a_sprite.vertices[3].uv[0] += DistanceToNextAnim;
 
 }
+
