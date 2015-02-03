@@ -2,11 +2,13 @@
 #include "tinyxml2.h" 
 #include "SubCommand.h"
 
+#include <map>
+
 using namespace tinyxml2;
 
 struct CharValues
 {
-	unsigned int id, x, y, width, height, xOffset, yOffset;
+	unsigned int id, x, y, width, height, xOffset, yOffset, xAdvance;
 };
 
 class GLF
@@ -21,7 +23,14 @@ public:
 	GLuint uiProgramTextured;
 	GLuint MatrixIDTextured;
 	const float* ortho;
-	
+	std::map<int, CharValues> CharMap;
+	unsigned int fontSheet;
+
+
+	XMLDocument doc;
+	XMLElement * root;
+	XMLElement * cursor;
+	XMLElement * currentElement, * childElement;
 
 
 	/*Initializes window, must specify 
@@ -98,7 +107,7 @@ public:
 
 	void dump_to_stdout(const char* pFilename)
 	{
-		XMLDocument doc;
+
 		int status = doc.LoadFile(pFilename);
 
 		if (status != tinyxml2::XML_NO_ERROR)
@@ -107,18 +116,21 @@ public:
 			doc.PrintError();
 			return;
 		}
+		else
+		{
+			printf("it worked...");
+		}
 
-		XMLElement * root = doc.FirstChildElement("font");
-		XMLElement * cursor = root->FirstChildElement("chars");
-		cursor = cursor->FirstChildElement("char");
-		unsigned int id = cursor->IntAttribute("id");
-		unsigned int location[2] = {};
-		//FirstChildElement
-		//IntAttribute
-		//NextSiblingElement
+
+		root = doc.FirstChildElement("font");
+		cursor = root->FirstChildElement("chars")->FirstChildElement("char");
 	}
 
-	void LoadCharMap();
+	void SetFont(const char* pFileName);
 
-	void LoadCharFont(char* c);
+	void LoadCharMap(const char* pFileName);
+
+	void DrawString(const char* str, int xPos, int yPos);
+
+	void DrawChar(char ch, int xPos, int yPos);
 };

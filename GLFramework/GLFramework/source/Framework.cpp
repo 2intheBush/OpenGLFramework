@@ -229,5 +229,41 @@ void GLF::AnimateSprite(Sprite& a_sprite)
 
 }
 
-void GLF::
+void GLF::LoadCharMap(const char* pFileName)
+{
+	dump_to_stdout(pFileName);
+	
+	for (childElement = cursor; childElement != NULL; childElement = childElement->NextSiblingElement())
+	{
+		CharValues TempChar;
+		TempChar.id = childElement->IntAttribute("id");
+		TempChar.x = childElement->IntAttribute("x");
+		TempChar.y = childElement->IntAttribute("y");
+		TempChar.width = childElement->IntAttribute("width");
+		TempChar.height = childElement->IntAttribute("height");
+		TempChar.xOffset = childElement->IntAttribute("xoffset");
+		TempChar.yOffset = childElement->IntAttribute("yoffset");
+		TempChar.xAdvance = childElement->IntAttribute("xadvance");
+		CharMap.emplace(std::pair<int, CharValues>(TempChar.id, TempChar));
+	}
+	printf("Text Attributes Loaded");
+} 
 
+void GLF::DrawString(const char* str, int xPos, int yPos)
+{
+	while (*str)
+	{
+		DrawChar(*str, xPos, yPos);
+		xPos += CharMap[*str].xAdvance;
+		str++;
+	}
+}
+void GLF::DrawChar(char ch, int xPos, int yPos)
+{
+	unsigned int location[2]{xPos, yPos};
+	unsigned int size[2]{CharMap[ch].width, CharMap[ch].height};
+	unsigned int offset[2]{CharMap[ch].xOffset, CharMap[ch].yOffset};
+	Sprite s("resources\\images\\Arial_0.png",location, size, offset);
+
+	DrawSprite(s);
+}

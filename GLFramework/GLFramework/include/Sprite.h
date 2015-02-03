@@ -38,6 +38,7 @@ public:
 	*/
 	Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList);
 	Sprite(const char* oFileName, unsigned int location[2], unsigned int size[2], unsigned int offset[2]);
+	Sprite(const char* oFileName);
 	~Sprite(){};
 	Vertex vertices[4];
 	

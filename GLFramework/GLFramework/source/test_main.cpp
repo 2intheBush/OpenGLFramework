@@ -4,8 +4,6 @@ using namespace glm;
 
 GLF Frmwrk;
 
-
-
 int main()
 {
 	Frmwrk.InitWindow(800, 600, "Hell YA!!");
@@ -21,7 +19,7 @@ int main()
 	myGlobals->input->ButtonS_ = new MoveDownCommand();
 	myGlobals->input->ButtonD_ = new MoveRightCommand();
 
-	Frmwrk.dump_to_stdout("resources\\images\\arial.fnt");
+	Frmwrk.LoadCharMap("resources\\images\\Arial.fnt");
 
 	float location[2]{80, 80};
 	float location2[2]{400,300};
@@ -49,6 +47,8 @@ int main()
 	double timeCount = 0;
 	double animationCount = 0;
 	
+	Frmwrk.DrawString("Hello World", 800, 800);
+
 	while (!glfwWindowShouldClose(Singleton::GetInstance()->window))
 	{
 		Frmwrk.SetScreenColor(0.2f, 0.2f, 0.25f, 0.0f);
@@ -99,5 +99,12 @@ int main()
 
 		Frmwrk.SwapBuffers();
 	}
+	
+	delete myGlobals->input->ButtonW_;
+	delete myGlobals->input->ButtonA_;
+	delete myGlobals->input->ButtonS_;
+	delete myGlobals->input->ButtonD_;
+	delete myGlobals->input;
+
 	Frmwrk.Shutdown();
 }

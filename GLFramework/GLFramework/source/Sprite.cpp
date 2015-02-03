@@ -48,23 +48,23 @@ Sprite::Sprite(const char* oFileName, unsigned int location[2], unsigned int siz
 	unsigned int bpp = 4;
 	vertices[0].position[0] = location[0] - size[0] + offset[0];
 	vertices[0].position[1] = location[1] - size[1] + offset[1];
-	vertices[0].uv[0] = 1 / vertices[0].position[0];
-	vertices[0].uv[1] = 1 / vertices[0].position[1];
+	vertices[0].uv[0] = imageWidth / vertices[0].position[0];
+	vertices[0].uv[1] = imageHeight / vertices[0].position[1];
 
 	vertices[1].position[0] = location[0] - size[0] + offset[0];
 	vertices[1].position[1] = location[1] + size[1] + offset[1];
-	vertices[1].uv[0] = 1 / vertices[1].position[0];
-	vertices[1].uv[1] = 1 / vertices[1].position[1];
+	vertices[1].uv[0] = imageWidth / vertices[1].position[0];
+	vertices[1].uv[1] = imageHeight / vertices[1].position[1];
 	
 	vertices[2].position[0] = location[0] + size[0] + offset[0];
 	vertices[2].position[1] = location[1] + size[1] + offset[1];
-	vertices[2].uv[0] = 1 / vertices[2].position[0];
-	vertices[2].uv[1] = 1 / vertices[2].position[1];
+	vertices[2].uv[0] = imageWidth / vertices[2].position[0];
+	vertices[2].uv[1] = imageHeight / vertices[2].position[1];
 
 	vertices[3].position[0] = location[0] + size[0] + offset[0];
 	vertices[3].position[1] = location[1] - size[1] + offset[1];
-	vertices[3].uv[0] = 1 / vertices[3].position[0];
-	vertices[3].uv[1] = 1 / vertices[3].position[1];
+	vertices[3].uv[0] = imageWidth / vertices[3].position[0];
+	vertices[3].uv[1] = imageHeight / vertices[3].position[1];
 
 	for (int i = 0; i < 4; i++)
 	{
