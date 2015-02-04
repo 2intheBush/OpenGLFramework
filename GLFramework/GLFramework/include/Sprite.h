@@ -11,6 +11,7 @@
 #include "SOIL.h"
 #include <fstream>
 #include <iostream>
+#include "GLOBALS.h"
 
 struct Vertex
 {
@@ -37,8 +38,7 @@ public:
 	set uvCoordinates to a  vector 4 as {x1, y1, x2, y2}
 	*/
 	Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList);
-	Sprite(const char* oFileName, unsigned int location[2], unsigned int size[2], unsigned int offset[2]);
-	Sprite(const char* oFileName);
+	Sprite(const char* oFileName, int location[2], char ch);
 	~Sprite(){};
 	Vertex vertices[4];
 	

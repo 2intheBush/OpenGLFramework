@@ -2,14 +2,7 @@
 #include "tinyxml2.h" 
 #include "SubCommand.h"
 
-#include <map>
-
 using namespace tinyxml2;
-
-struct CharValues
-{
-	unsigned int id, x, y, width, height, xOffset, yOffset, xAdvance;
-};
 
 class GLF
 {
@@ -23,7 +16,6 @@ public:
 	GLuint uiProgramTextured;
 	GLuint MatrixIDTextured;
 	const float* ortho;
-	std::map<int, CharValues> CharMap;
 	unsigned int fontSheet;
 
 

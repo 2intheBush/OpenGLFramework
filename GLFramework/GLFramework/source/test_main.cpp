@@ -46,8 +46,13 @@ int main()
 	double animTimer = .085f;		
 	double timeCount = 0;
 	double animationCount = 0;
+
+	Frmwrk.DrawString("H", 10, 400);
 	
-	Frmwrk.DrawString("Hello World", 800, 800);
+	
+	std:: cout << std::endl;
+	std::cout << myGlobals->CharMap['H'].id << ", H id is 72" << std::endl;
+
 
 	while (!glfwWindowShouldClose(Singleton::GetInstance()->window))
 	{
@@ -57,6 +62,9 @@ int main()
 		lastFrame = currentFrame;
 
 		myGlobals->input->HandleInput();
+
+		Frmwrk.DrawString("H", 10, 400);
+
 
 		hAxis = myGlobals->input->horzAxis;
 		vAxis = myGlobals->input->vertAxis;

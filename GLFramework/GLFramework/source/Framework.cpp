@@ -232,38 +232,41 @@ void GLF::AnimateSprite(Sprite& a_sprite)
 void GLF::LoadCharMap(const char* pFileName)
 {
 	dump_to_stdout(pFileName);
+
+	Singleton * myGlobal = Singleton::GetInstance();
 	
 	for (childElement = cursor; childElement != NULL; childElement = childElement->NextSiblingElement())
 	{
 		CharValues TempChar;
 		TempChar.id = childElement->IntAttribute("id");
-		TempChar.x = childElement->IntAttribute("x");
-		TempChar.y = childElement->IntAttribute("y");
+		TempChar.x0 = childElement->IntAttribute("x");
+		TempChar.y0 = childElement->IntAttribute("y");
 		TempChar.width = childElement->IntAttribute("width");
 		TempChar.height = childElement->IntAttribute("height");
+		TempChar.x1 = TempChar.x0 + TempChar.width;
+		TempChar.y1 = TempChar.y0 + TempChar.height;
 		TempChar.xOffset = childElement->IntAttribute("xoffset");
 		TempChar.yOffset = childElement->IntAttribute("yoffset");
 		TempChar.xAdvance = childElement->IntAttribute("xadvance");
-		CharMap.emplace(std::pair<int, CharValues>(TempChar.id, TempChar));
+		myGlobal->CharMap.emplace(std::pair<int, CharValues>(TempChar.id, TempChar));
 	}
-	printf("Text Attributes Loaded");
+	printf("Text Attributes Loaded\n");
 } 
 
 void GLF::DrawString(const char* str, int xPos, int yPos)
 {
+	Singleton * myGlobal = Singleton::GetInstance();
 	while (*str)
 	{
 		DrawChar(*str, xPos, yPos);
-		xPos += CharMap[*str].xAdvance;
+		xPos += myGlobal->CharMap[*str].xAdvance;
 		str++;
 	}
 }
+
 void GLF::DrawChar(char ch, int xPos, int yPos)
 {
-	unsigned int location[2]{xPos, yPos};
-	unsigned int size[2]{CharMap[ch].width, CharMap[ch].height};
-	unsigned int offset[2]{CharMap[ch].xOffset, CharMap[ch].yOffset};
-	Sprite s("resources\\images\\Arial_0.png",location, size, offset);
-
+	int location[2]{xPos, yPos};
+	Sprite s("resources\\images\\Arial_0.png",location, ch);
 	DrawSprite(s);
 }

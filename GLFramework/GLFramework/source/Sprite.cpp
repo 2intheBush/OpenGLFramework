@@ -41,30 +41,35 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 	glGenBuffers(1, &uiIBO);
 }
 
-Sprite::Sprite(const char* oFileName, unsigned int location[2], unsigned int size[2], unsigned int offset[2])
+Sprite::Sprite(const char* oFileName, int location[2], char ch)
 {
+	Singleton * myGlobal = Singleton::GetInstance();
+
+	
 	int imageWidth, imageHeight;
+	float fontSheetWidth, fontSheetHeight;
+	fontSheetHeight = fontSheetWidth = 256;
 	spriteID = loadTexture(oFileName, imageWidth, imageHeight, bpp);
 	unsigned int bpp = 4;
-	vertices[0].position[0] = location[0] - size[0] + offset[0];
-	vertices[0].position[1] = location[1] - size[1] + offset[1];
-	vertices[0].uv[0] = imageWidth / vertices[0].position[0];
-	vertices[0].uv[1] = imageHeight / vertices[0].position[1];
+	vertices[0].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width;
+	vertices[0].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height;
+	vertices[0].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
+	vertices[0].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
 
-	vertices[1].position[0] = location[0] - size[0] + offset[0];
-	vertices[1].position[1] = location[1] + size[1] + offset[1];
-	vertices[1].uv[0] = imageWidth / vertices[1].position[0];
-	vertices[1].uv[1] = imageHeight / vertices[1].position[1];
+	vertices[1].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width;
+	vertices[1].position[1] = location[1] + .5f * myGlobal->CharMap[ch].height;
+	vertices[1].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetWidth;
+	vertices[1].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
 	
-	vertices[2].position[0] = location[0] + size[0] + offset[0];
-	vertices[2].position[1] = location[1] + size[1] + offset[1];
-	vertices[2].uv[0] = imageWidth / vertices[2].position[0];
-	vertices[2].uv[1] = imageHeight / vertices[2].position[1];
+	vertices[2].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width;
+	vertices[2].position[1] = location[1] + .5f * myGlobal->CharMap[ch].height;
+	vertices[2].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
+	vertices[2].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
 
-	vertices[3].position[0] = location[0] + size[0] + offset[0];
-	vertices[3].position[1] = location[1] - size[1] + offset[1];
-	vertices[3].uv[0] = imageWidth / vertices[3].position[0];
-	vertices[3].uv[1] = imageHeight / vertices[3].position[1];
+	vertices[3].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width;
+	vertices[3].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height;
+	vertices[3].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetHeight;
+	vertices[3].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
 
 	for (int i = 0; i < 4; i++)
 	{
@@ -75,6 +80,10 @@ Sprite::Sprite(const char* oFileName, unsigned int location[2], unsigned int siz
 		vertices[i].color[2] = 1.f;
 		vertices[i].color[3] = 1.f;
 	}
+
+	//create VBO and IBO for object
+	glGenBuffers(1, &uiVBO);
+	glGenBuffers(1, &uiIBO);
 }
 
 unsigned int Sprite::loadTexture(const char* o_fileName, int & a_iWidth, int & a_iHeight, int & a_iBPP)
