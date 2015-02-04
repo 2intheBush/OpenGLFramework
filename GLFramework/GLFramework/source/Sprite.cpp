@@ -1,5 +1,7 @@
 #include "Sprite.h"
 
+
+
 Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList)
 {
 	int imageWidth, imageHeight;
@@ -44,31 +46,30 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 Sprite::Sprite(const char* oFileName, int location[2], char ch)
 {
 	Singleton * myGlobal = Singleton::GetInstance();
-
 	
 	int imageWidth, imageHeight;
 	float fontSheetWidth, fontSheetHeight;
-	fontSheetHeight = fontSheetWidth = 256;
 	spriteID = loadTexture(oFileName, imageWidth, imageHeight, bpp);
+	fontSheetHeight = fontSheetWidth = imageHeight;
 	unsigned int bpp = 4;
 	vertices[0].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width;
 	vertices[0].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height;
 	vertices[0].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
-	vertices[0].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
+	vertices[0].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
 
-	vertices[1].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width;
-	vertices[1].position[1] = location[1] + .5f * myGlobal->CharMap[ch].height;
-	vertices[1].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetWidth;
+	vertices[1].position[0] = location[0] -.5f * myGlobal->CharMap[ch].width;
+	vertices[1].position[1] = location[1] +.5f * myGlobal->CharMap[ch].height;
+	vertices[1].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
 	vertices[1].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
 	
 	vertices[2].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width;
-	vertices[2].position[1] = location[1] + .5f * myGlobal->CharMap[ch].height;
-	vertices[2].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
-	vertices[2].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
+	vertices[2].position[1] = location[1] +.5f * myGlobal->CharMap[ch].height;
+	vertices[2].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetWidth;
+	vertices[2].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
 
 	vertices[3].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width;
 	vertices[3].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height;
-	vertices[3].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetHeight;
+	vertices[3].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetWidth;
 	vertices[3].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
 
 	for (int i = 0; i < 4; i++)

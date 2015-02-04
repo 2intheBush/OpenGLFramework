@@ -234,20 +234,24 @@ void GLF::LoadCharMap(const char* pFileName)
 	dump_to_stdout(pFileName);
 
 	Singleton * myGlobal = Singleton::GetInstance();
+
+	
 	
 	for (childElement = cursor; childElement != NULL; childElement = childElement->NextSiblingElement())
 	{
 		CharValues TempChar;
+		TempChar.scaleH = Atlas->IntAttribute("scaleH");
 		TempChar.id = childElement->IntAttribute("id");
 		TempChar.x0 = childElement->IntAttribute("x");
-		TempChar.y0 = childElement->IntAttribute("y");
+		TempChar.y0 = TempChar.scaleH - childElement->IntAttribute("y");
 		TempChar.width = childElement->IntAttribute("width");
 		TempChar.height = childElement->IntAttribute("height");
 		TempChar.x1 = TempChar.x0 + TempChar.width;
-		TempChar.y1 = TempChar.y0 + TempChar.height;
+		TempChar.y1 = TempChar.y0 - TempChar.height;
 		TempChar.xOffset = childElement->IntAttribute("xoffset");
 		TempChar.yOffset = childElement->IntAttribute("yoffset");
 		TempChar.xAdvance = childElement->IntAttribute("xadvance");
+
 		myGlobal->CharMap.emplace(std::pair<int, CharValues>(TempChar.id, TempChar));
 	}
 	printf("Text Attributes Loaded\n");
@@ -255,12 +259,13 @@ void GLF::LoadCharMap(const char* pFileName)
 
 void GLF::DrawString(const char* str, int xPos, int yPos)
 {
-	Singleton * myGlobal = Singleton::GetInstance();
 	while (*str)
 	{
 		DrawChar(*str, xPos, yPos);
 		xPos += myGlobal->CharMap[*str].xAdvance;
+		char first = *str;
 		str++;
+		//xPos += fKerning(first, *str);
 	}
 }
 
@@ -270,3 +275,22 @@ void GLF::DrawChar(char ch, int xPos, int yPos)
 	Sprite s("resources\\images\\Arial_0.png",location, ch);
 	DrawSprite(s);
 }
+
+//int GLF::fKerning(char first, char second)
+//{
+//	while (myGlobal->CharMap[first].id != kFirst)
+//	{
+//		Kerning->NextSiblingElement();
+//	}
+//	if (myGlobal->CharMap[first].id == kFirst)
+//	{
+//		while (myGlobal->CharMap[second].id != kSecond)
+//		{
+//			Kerning->NextSiblingElement();
+//		}
+//		if (myGlobal->CharMap[second].id == kSecond)
+//		{
+//			return Kerning->IntAttribute("amount");
+//		}
+//	}
+//}

@@ -41,7 +41,6 @@ public:
 	Sprite(const char* oFileName, int location[2], char ch);
 	~Sprite(){};
 	Vertex vertices[4];
-	
 	int bpp;
 	unsigned int spriteID;
 	GLuint uiVBO;

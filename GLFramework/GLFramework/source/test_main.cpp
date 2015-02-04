@@ -47,7 +47,7 @@ int main()
 	double timeCount = 0;
 	double animationCount = 0;
 
-	Frmwrk.DrawString("H", 10, 400);
+	Frmwrk.DrawString("", 10, 400);
 	
 	
 	std:: cout << std::endl;
@@ -63,7 +63,7 @@ int main()
 
 		myGlobals->input->HandleInput();
 
-		Frmwrk.DrawString("H", 10, 400);
+		Frmwrk.DrawString("Hello World", 10, 400);
 
 
 		hAxis = myGlobals->input->horzAxis;

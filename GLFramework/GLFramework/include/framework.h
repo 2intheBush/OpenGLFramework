@@ -17,13 +17,15 @@ public:
 	GLuint MatrixIDTextured;
 	const float* ortho;
 	unsigned int fontSheet;
-
+	int kFirst;
+	int kSecond;
 
 	XMLDocument doc;
 	XMLElement * root;
-	XMLElement * cursor;
+	XMLElement * cursor, * Atlas, * Kerning;
 	XMLElement * currentElement, * childElement;
 
+	Singleton * myGlobal = Singleton::GetInstance();
 
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
@@ -116,6 +118,10 @@ public:
 
 		root = doc.FirstChildElement("font");
 		cursor = root->FirstChildElement("chars")->FirstChildElement("char");
+		Atlas = root->FirstChildElement("common");
+		//Kerning = root->FirstChildElement("kerning");
+		//kFirst = Kerning->IntAttribute("first");
+		//kSecond = Kerning->IntAttribute("second");
 	}
 
 	void SetFont(const char* pFileName);
@@ -125,4 +131,6 @@ public:
 	void DrawString(const char* str, int xPos, int yPos);
 
 	void DrawChar(char ch, int xPos, int yPos);
+
+	int GLF::fKerning(char ch, char ch2);
 };
