@@ -38,7 +38,7 @@ public:
 	set uvCoordinates to a  vector 4 as {x1, y1, x2, y2}
 	*/
 	Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList);
-	Sprite(const char* oFileName, int location[2], char ch);
+	Sprite(const char* oFileName);
 	~Sprite(){};
 	Vertex vertices[4];
 	int bpp;
@@ -48,6 +48,8 @@ public:
 	unsigned int loadTexture(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP);
 
 	void UpdateVertices(float o_loc[2], int o_size[2]);
+
+	void UpdateChar(char ch, int location[2]);
 };
 #endif
 

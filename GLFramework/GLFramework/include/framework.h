@@ -27,6 +27,7 @@ public:
 
 	Singleton * myGlobal = Singleton::GetInstance();
 
+
 	/*Initializes window, must specify 
 	width height and title for window in that order as paramaters
 	width and height as integers and title as const char**/
@@ -128,9 +129,10 @@ public:
 
 	void LoadCharMap(const char* pFileName);
 
-	void DrawString(const char* str, int xPos, int yPos);
+	void DrawString(Sprite &font, const char* str, int xPos, int yPos);
 
-	void DrawChar(char ch, int xPos, int yPos);
+	void DrawChar(Sprite &font, char ch, int xPos, int yPos);
 
 	int GLF::fKerning(char ch, char ch2);
+
 };

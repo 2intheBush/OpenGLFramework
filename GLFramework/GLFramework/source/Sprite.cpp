@@ -43,7 +43,7 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 	glGenBuffers(1, &uiIBO);
 }
 
-Sprite::Sprite(const char* oFileName, int location[2], char ch)
+Sprite::Sprite(const char* oFileName)
 {
 	Singleton * myGlobal = Singleton::GetInstance();
 	
@@ -51,27 +51,6 @@ Sprite::Sprite(const char* oFileName, int location[2], char ch)
 	float fontSheetWidth, fontSheetHeight;
 	spriteID = loadTexture(oFileName, imageWidth, imageHeight, bpp);
 	fontSheetHeight = fontSheetWidth = imageHeight;
-	unsigned int bpp = 4;
-	vertices[0].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width;
-	vertices[0].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height;
-	vertices[0].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
-	vertices[0].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
-
-	vertices[1].position[0] = location[0] -.5f * myGlobal->CharMap[ch].width;
-	vertices[1].position[1] = location[1] +.5f * myGlobal->CharMap[ch].height;
-	vertices[1].uv[0] = myGlobal->CharMap[ch].x0 / fontSheetWidth;
-	vertices[1].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
-	
-	vertices[2].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width;
-	vertices[2].position[1] = location[1] +.5f * myGlobal->CharMap[ch].height;
-	vertices[2].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetWidth;
-	vertices[2].uv[1] = myGlobal->CharMap[ch].y0 / fontSheetHeight;
-
-	vertices[3].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width;
-	vertices[3].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height;
-	vertices[3].uv[0] = myGlobal->CharMap[ch].x1 / fontSheetWidth;
-	vertices[3].uv[1] = myGlobal->CharMap[ch].y1 / fontSheetHeight;
-
 	for (int i = 0; i < 4; i++)
 	{
 		vertices[i].position[2] = 0.0f;
@@ -132,4 +111,31 @@ void Sprite::UpdateVertices(float o_loc[2], int o_size[2])
 	//Vertex four
 	vertices[3].position[0] = o_loc[0] + o_size[0] * .5f;
 	vertices[3].position[1] = o_loc[1] - o_size[1] * .5f;
+}
+
+void Sprite::UpdateChar(char ch, int location[2])
+{
+	Singleton * myGlobal = Singleton::GetInstance();
+	float imageWidth,imageHeight;
+	imageWidth = imageHeight = 256;
+
+	vertices[0].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width - .5f * myGlobal->CharMap[ch].xOffset;
+	vertices[0].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height - .5f * myGlobal->CharMap[ch].yOffset;
+	vertices[0].uv[0] = myGlobal->CharMap[ch].x0 / imageWidth;
+	vertices[0].uv[1] = myGlobal->CharMap[ch].y1 / imageHeight;
+
+	vertices[1].position[0] = location[0] - .5f * myGlobal->CharMap[ch].width - .5f * myGlobal->CharMap[ch].xOffset;
+	vertices[1].position[1] = location[1] + .5f * myGlobal->CharMap[ch].height - .5f * myGlobal->CharMap[ch].yOffset;
+	vertices[1].uv[0] = myGlobal->CharMap[ch].x0 / imageWidth;
+	vertices[1].uv[1] = myGlobal->CharMap[ch].y0 / imageHeight;
+
+	vertices[2].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width - .5f * myGlobal->CharMap[ch].xOffset;
+	vertices[2].position[1] = location[1] + .5f * myGlobal->CharMap[ch].height - .5f * myGlobal->CharMap[ch].yOffset;
+	vertices[2].uv[0] = myGlobal->CharMap[ch].x1 / imageWidth;
+	vertices[2].uv[1] = myGlobal->CharMap[ch].y0 / imageHeight;
+
+	vertices[3].position[0] = location[0] + .5f * myGlobal->CharMap[ch].width - .5f * myGlobal->CharMap[ch].xOffset;
+	vertices[3].position[1] = location[1] - .5f * myGlobal->CharMap[ch].height - .5f * myGlobal->CharMap[ch].yOffset;
+	vertices[3].uv[0] = myGlobal->CharMap[ch].x1 / imageWidth;
+	vertices[3].uv[1] = myGlobal->CharMap[ch].y1 / imageHeight;
 }

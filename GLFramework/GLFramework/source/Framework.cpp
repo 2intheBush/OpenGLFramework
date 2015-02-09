@@ -235,8 +235,6 @@ void GLF::LoadCharMap(const char* pFileName)
 
 	Singleton * myGlobal = Singleton::GetInstance();
 
-	
-	
 	for (childElement = cursor; childElement != NULL; childElement = childElement->NextSiblingElement())
 	{
 		CharValues TempChar;
@@ -257,24 +255,27 @@ void GLF::LoadCharMap(const char* pFileName)
 	printf("Text Attributes Loaded\n");
 } 
 
-void GLF::DrawString(const char* str, int xPos, int yPos)
+void GLF::DrawString(Sprite &font, const char* str, int xPos, int yPos)
 {
 	while (*str)
 	{
-		DrawChar(*str, xPos, yPos);
-		xPos += myGlobal->CharMap[*str].xAdvance;
+		DrawChar(font,*str, xPos, yPos);
 		char first = *str;
 		str++;
+		xPos += myGlobal->CharMap[first].xAdvance;
+
 		//xPos += fKerning(first, *str);
 	}
 }
 
-void GLF::DrawChar(char ch, int xPos, int yPos)
+void GLF::DrawChar(Sprite &font, char ch, int xPos, int yPos)
 {
 	int location[2]{xPos, yPos};
-	Sprite s("resources\\images\\Arial_0.png",location, ch);
-	DrawSprite(s);
+	font.UpdateChar(ch, location);
+	DrawSprite(font);
 }
+
+
 
 //int GLF::fKerning(char first, char second)
 //{
