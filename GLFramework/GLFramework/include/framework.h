@@ -19,6 +19,10 @@ public:
 	unsigned int fontSheet;
 	int kFirst;
 	int kSecond;
+	double currentFrame, deltaTime, lastFrame = 0;
+	double animTimer = .085f;
+	double timeCount = 0;
+	double animationCount = 0;
 
 	XMLDocument doc;
 	XMLElement * root;
@@ -98,7 +102,9 @@ public:
 	
 	glm::vec2 MousePosition();
 
-	void AnimateSprite(Sprite& a_sprite);
+	void AnimateSprite(Sprite& a_sprite, int numOfAnims);
+
+	void UpdateUV(Sprite& a_sprite, int numOfAnims);
 
 	void dump_to_stdout(const char* pFilename)
 	{

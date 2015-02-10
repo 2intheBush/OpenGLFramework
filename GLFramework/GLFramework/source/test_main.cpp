@@ -1,5 +1,4 @@
 #include "framework.h"
-#include <SubCommand.h>
 using namespace glm;
 
 GLF Frmwrk;
@@ -7,7 +6,7 @@ GLF Frmwrk;
 int main()
 {
 	Frmwrk.InitWindow(800, 600, "Hell YA!!");
-	double currentFrame, deltaTime, lastFrame = 0;
+	//double currentFrame, deltaTime, lastFrame = 0;
 	float hAxis = 0.f;
 	float vAxis = 0.f;
 
@@ -28,13 +27,7 @@ int main()
 	int size2[2]{150, 150};
 	
 	//loading values into vec4 for uv coordinates
-	float x = 0.f, y = .5f, z = .16f, w = 1.f;
-	std::vector<vec2> UVList;
 	std::vector<vec2> AsUV_s;
-	UVList.push_back(glm::vec2(x, y));
-	UVList.emplace_back(glm::vec2(x, w));
-	UVList.emplace_back(glm::vec2(z, w));
-	UVList.emplace_back(glm::vec2(z, y));
 
 	float x_s = 0.f, y_s = 0.f, z_s = 1.f, w_s = 1.f;
 	AsUV_s.push_back(glm::vec2(x_s, y_s));
@@ -42,59 +35,30 @@ int main()
 	AsUV_s.emplace_back(glm::vec2(z_s, w_s));
 	AsUV_s.emplace_back(glm::vec2(z_s, y_s));
 
-	Sprite AnimatedObject("resources\\images\\TestGokuAlpha.png", location, size, UVList);
+	Sprite AnimatedObject("resources\\images\\TestGokuAlpha.png", location, size);
 	Sprite TestObject("resources\\images\\Astroid.png", location2, size2, AsUV_s);
-	double animTimer = .085f;		
-	double timeCount = 0;
-	double animationCount = 0;
-
 
 
 	while (!glfwWindowShouldClose(Singleton::GetInstance()->window))
 	{
 		Frmwrk.SetScreenColor(0.2f, 0.2f, 0.25f, 0.0f);
-		currentFrame = glfwGetTime();
-		deltaTime = currentFrame - lastFrame;
-		lastFrame = currentFrame;
+		Frmwrk.currentFrame = glfwGetTime();
+		Frmwrk.deltaTime = Frmwrk.currentFrame - Frmwrk.lastFrame;
+		Frmwrk.lastFrame = Frmwrk.currentFrame;
 
 		myGlobals->input->HandleInput();
 
-		Frmwrk.DrawString(font,"Hello World", 10, 400);
+		Frmwrk.DrawString(font,"Goku kickin butt", 10, 400);
 
 
 		hAxis = myGlobals->input->horzAxis;
 		vAxis = myGlobals->input->vertAxis;
 
-		location2[0] += 100 * (hAxis * deltaTime);
-		location2[1] += 100 * (vAxis * deltaTime);
+		location2[0] += 100 * (hAxis * Frmwrk.deltaTime);
+		location2[1] += 100 * (vAxis * Frmwrk.deltaTime);
 
 		//Animate test calls
-		timeCount = timeCount + deltaTime;
-		if (animTimer < timeCount)
-		{
-			Frmwrk.AnimateSprite(AnimatedObject);
-			timeCount = 0;
-			animationCount++;
-		}
-		if (animationCount > 5)
-		{
-			UVList.pop_back();
-			UVList.pop_back();
-			UVList.pop_back();
-			UVList.pop_back();
-			float x = 0.f, y = .5f, z = .16f, w = 1.f;
-			UVList.push_back(glm::vec2(x, y));
-			UVList.emplace_back(glm::vec2(x, w));
-			UVList.emplace_back(glm::vec2(z, w));
-			UVList.emplace_back(glm::vec2(z, y));
-			animationCount = 0;
-		
-			for (int i = 0; i < 4; i++)
-			{
-				AnimatedObject.vertices[i].uv[0] = UVList[i].x;
-				AnimatedObject.vertices[i].uv[1] = UVList[i].y;
-			}
-		}
+		Frmwrk.AnimateSprite(AnimatedObject, 5);
 		//input handling test calls
 		Frmwrk.DrawSprite(AnimatedObject);
 		

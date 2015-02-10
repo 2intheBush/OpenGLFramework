@@ -38,11 +38,15 @@ public:
 	set uvCoordinates to a  vector 4 as {x1, y1, x2, y2}
 	*/
 	Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList);
+	Sprite(const char* o_fileName, float o_loc[2], int o_size[2]);
 	Sprite(const char* oFileName);
 	~Sprite(){};
 	Vertex vertices[4];
+	std::vector<glm::vec2> UVList;
+	float UVx, UVy, UVz, UVw;
 	int bpp;
 	unsigned int spriteID;
+
 	GLuint uiVBO;
 	GLuint uiIBO;
 	unsigned int loadTexture(const char* a_pFilename, int & a_iWidth, int & a_iHeight, int & a_iBPP);

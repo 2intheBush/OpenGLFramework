@@ -2,6 +2,63 @@
 
 
 
+Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2])
+{
+	int imageWidth, imageHeight;
+	bpp = 4;
+	//Use load texture to apply texture to sprite I
+	spriteID = loadTexture(o_fileName, imageWidth, imageHeight, bpp);
+	
+	//loading values into vec4 for uv coordinates
+	float UVx = 0.f, UVy = .5f, UVz = .16f, UVw = 1.f;
+	UVList.push_back(glm::vec2(UVx, UVy));
+	UVList.emplace_back(glm::vec2(UVx, UVw));
+	UVList.emplace_back(glm::vec2(UVz, UVw));
+	UVList.emplace_back(glm::vec2(UVz, UVy));
+	
+	//vertex one
+	vertices[0].position[0] = o_loc[0] - o_size[0] * .5f;
+	vertices[0].position[1] = o_loc[1] - o_size[1] * .5f;
+	vertices[0].uv[0] = UVList[0].x;
+	vertices[0].uv[1] = UVList[0].y;
+
+	//vertex two
+	vertices[1].position[0] = o_loc[0] - o_size[0] * .5f;
+	vertices[1].position[1] = o_loc[1] + o_size[1] * .5f;
+	vertices[1].uv[0] = UVList[1].x;
+	vertices[1].uv[1] = UVList[1].y;
+
+	//Vertex three
+	vertices[2].position[0] = o_loc[0] + o_size[0] * .5f;
+	vertices[2].position[1] = o_loc[1] + o_size[1] * .5f;
+	vertices[2].uv[0] = UVList[2].x;
+	vertices[2].uv[1] = UVList[2].y;
+
+	//Vertex four
+	vertices[3].position[0] = o_loc[0] + o_size[0] * .5f;
+	vertices[3].position[1] = o_loc[1] - o_size[1] * .5f;
+	vertices[3].uv[0] = UVList[3].x;
+	vertices[3].uv[1] = UVList[3].y;
+
+	//uniform values for vertices
+	for (int i = 0; i < 4; i++)
+	{
+		vertices[i].position[2] = 0.0f;
+		vertices[i].position[3] = 1.0f;
+		vertices[i].color[0] = 1.f;
+		vertices[i].color[1] = 1.f;
+		vertices[i].color[2] = 1.f;
+		vertices[i].color[3] = 1.f;
+		//vertices[i].uv[i] = UVList.push_back(glm::vec2(UVList[i].x, UVList[i].y));
+		//vertices[i].uv[0] = UVList[i].x;
+		//vertices[i].uv[1] = UVList[i].y;
+	}
+
+	//create VBO and IBO for object
+	glGenBuffers(1, &uiVBO);
+	glGenBuffers(1, &uiIBO);
+}
+
 Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vector<glm::vec2> UVList)
 {
 	int imageWidth, imageHeight;
@@ -37,6 +94,12 @@ Sprite::Sprite(const char* o_fileName, float o_loc[2], int o_size[2], std::vecto
 		vertices[i].uv[0] = UVList[i].x;
 		vertices[i].uv[1] = UVList[i].y;
 	}
+	//loading values into vec4 for uv coordinates
+	float x = 0.f, y = .5f, z = .16f, w = 1.f;
+	UVList.push_back(glm::vec2(x, y));
+	UVList.emplace_back(glm::vec2(x, w));
+	UVList.emplace_back(glm::vec2(z, w));
+	UVList.emplace_back(glm::vec2(z, y));
 
 	//create VBO and IBO for object
 	glGenBuffers(1, &uiVBO);

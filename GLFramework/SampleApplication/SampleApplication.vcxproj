@@ -11,8 +11,8 @@
     </ProjectConfiguration>
   </ItemGroup>
   <PropertyGroup Label="Globals">
-    <ProjectGuid>{1BBAB8F5-5CF8-4278-B458-AEBD72D31089}</ProjectGuid>
-    <RootNamespace>GLFramework</RootNamespace>
+    <ProjectGuid>{4D649B4C-5C87-4DEA-AD56-ED01062D152C}</ProjectGuid>
+    <RootNamespace>SampleApplication</RootNamespace>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -39,25 +39,17 @@
   </ImportGroup>
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
-    <IncludePath>$(ProjectDir)include\;$(SolutionDir)\GLFramework\include\;$(IncludePath)</IncludePath>
-    <LibraryPath>$(ProjectDir)libs\;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(SolutionDir)\GLFramework\include\;$(IncludePath)</IncludePath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
       <Optimization>Disabled</Optimization>
       <SDLCheck>true</SDLCheck>
-      <PreprocessorDefinitions>GLEW_STATIC;%(PreprocessorDefinitions)</PreprocessorDefinitions>
-      <BrowseInformation>true</BrowseInformation>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalLibraryDirectories>$(Projectdir)libs\;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
-      <AdditionalDependencies>glew32s.lib;glfw3.lib;opengl32.lib;SOIL.lib;tinyxml2.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
-    <Bscmake>
-      <PreserveSbr>true</PreserveSbr>
-    </Bscmake>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
@@ -74,26 +66,13 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="include\SubCommand.cpp" />
-    <ClCompile Include="source\Framework.cpp" />
-    <ClCompile Include="source\GLOBALS.cpp" />
-    <ClCompile Include="source\Sprite.cpp" />
-    <ClCompile Include="source\test_main.cpp" />
-    <ClCompile Include="source\tinyxml2.cpp" />
-    <ClCompile Include="source\Vegeta.cpp" />
+    <ClCompile Include="Goku.cpp" />
+    <ClCompile Include="main.cpp" />
+    <ClCompile Include="Vegeta.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\Command.h" />
-    <ClInclude Include="include\framework.h" />
-    <ClInclude Include="include\GLOBALS.h" />
-    <ClInclude Include="include\Sprite.h" />
-    <ClInclude Include="include\SubCommand.h" />
-    <ClInclude Include="include\tinyxml2.h" />
-    <ClInclude Include="include\Vegeta.h" />
-  </ItemGroup>
-  <ItemGroup>
-    <None Include="TexturedFragmentShader.glsl" />
-    <None Include="VertexShader.glsl" />
+    <ClInclude Include="Goku.h" />
+    <ClInclude Include="Vegeta.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

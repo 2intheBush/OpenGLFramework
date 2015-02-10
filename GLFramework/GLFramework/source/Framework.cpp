@@ -215,7 +215,7 @@ glm::vec2 GLF::MousePosition()
 	return glm::vec2(xPos, yPos);
 }
 
-void GLF::AnimateSprite(Sprite& a_sprite)
+void GLF::UpdateUV(Sprite& a_sprite, int numOfAnims)
 {
 	float DistanceToNextAnim = a_sprite.vertices[3].uv[0] - a_sprite.vertices[0].uv[0] + .001;
 	
@@ -226,7 +226,27 @@ void GLF::AnimateSprite(Sprite& a_sprite)
 	a_sprite.vertices[2].uv[0] += DistanceToNextAnim;
 
 	a_sprite.vertices[3].uv[0] += DistanceToNextAnim;
+}
 
+void GLF::AnimateSprite(Sprite& a_sprite, int numOfAnims)
+{
+	timeCount = timeCount + deltaTime;
+	if (animTimer < timeCount)
+	{
+		UpdateUV(a_sprite, numOfAnims);
+		timeCount = 0;
+		animationCount++;
+	}
+	
+	if (animationCount > 5)
+	{
+		for (int i = 0; i < 4; i++)
+		{
+			a_sprite.vertices[i].uv[0] = a_sprite.UVList[i].x;
+			a_sprite.vertices[i].uv[1] = a_sprite.UVList[i].y;
+		}
+		animationCount = 0;
+	}
 }
 
 void GLF::LoadCharMap(const char* pFileName)
