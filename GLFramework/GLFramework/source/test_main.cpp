@@ -50,7 +50,6 @@ int main()
 
 		Frmwrk.DrawString(font,"Goku kickin butt", 10, 400);
 
-
 		hAxis = myGlobals->input->horzAxis;
 		vAxis = myGlobals->input->vertAxis;
 
